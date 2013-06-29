@@ -100,7 +100,7 @@ while 1:
 
     if text.find(":!4freedoms\r\n") != -1 or text.find(":!fourfreedoms\r\n") != -1 or text.find(":!fourrules\r\n") != -1: #muh freedums
         if Locker.IsLocked():
-            sendm("Wait a bit longer, faggot.", nick)
+            sendm("Wait %s more second%s, faggot." % (Locker.Time, '' if Locker.Time == 1 else 's'), nick)
         else:
             sendm( "ESSENTIAL FREEDOMS:", ex[2] )
             sendm( "     0: The freedom to run the program, for any purpose.", ex[2] )
