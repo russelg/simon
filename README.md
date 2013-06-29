@@ -1,0 +1,4 @@
+simon
+=====
+
+simon irc bot
