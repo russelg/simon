@@ -9,6 +9,7 @@ from random import choice               #for random arrays
 from subprocess import check_output     #for system commands
 from leSimon.Asl import Asl             #Asl arrays
 from leSimon.YT import YT, Stats        #Youtube functions
+from leSimon import Uptime
 
 def sendm(msg, channel): #sends message to <channel>
     # msg = msg.encode('utf-8')
@@ -95,7 +96,7 @@ while 1:
         if text.find(":!uptime full\r\n") != -1:
             sendm( utf(check_output("uptime")), ex[2] )
         else:
-            sendm( utf(check_output("python up.py", shell=True)), ex[2] )
+            sendm( utf(Uptime.uptime()), ex[2] )
 
     if text.find(":!4freedoms\r\n") != -1 or text.find(":!fourfreedoms\r\n") != -1 or text.find(":!fourrules\r\n") != -1: #muh freedums
         if Locker.IsLocked():
