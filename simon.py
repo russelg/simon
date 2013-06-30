@@ -71,11 +71,11 @@ while 1:
         if ex[2] == GS['connect']['nick']:
             ex[2] = nick
 
-    if text.find(" JOIN :#") != -1 or text.find(" JOIN #") != -1 and text.find( GS['connect']['nick'] ) == -1 and ex[4].strip() != 'JOIN':
-        if text.find(" JOIN #") != -1:
-            sendm(irc, 'Hello ' + nick + ' :-) Welcome to ' + ex[2].strip() + '.', ex[2].strip())
-        else:
-            sendm(irc, 'Hello ' + nick + ' :-) Welcome to ' + ex[2].split(':')[1] + '.', ex[2].split(':')[1])
+    # if text.find(" JOIN :#") != -1 or text.find(" JOIN #") != -1 and text.find( GS['connect']['nick'] ) == -1 and ex[4].strip() != 'JOIN':
+    #     if text.find(" JOIN #") != -1:
+    #         sendm(irc, 'Hello ' + nick + ' :-) Welcome to ' + ex[2].strip() + '.', ex[2].strip())
+    #     else:
+    #         sendm(irc, 'Hello ' + nick + ' :-) Welcome to ' + ex[2].split(':')[1] + '.', ex[2].split(':')[1])
 
     Hook('PING', text.find('PING') != -1)
     Hook('help', text.find(":!help\r\n") != -1, ['', 'show this help message'])
