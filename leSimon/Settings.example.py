@@ -14,14 +14,28 @@ GS = { #Settings array
         "nickpass": "nickserv pass", #password for NickServ
         "channels": "channels" #channels to join, comma seperated
     },
-
     #irc ids of people that can use the bot admin commands
     "owners": [
         'user1',
         'user2'
     ],
-
-    "botIdent": "botidenthere"
+    # enabled plugins go below
+    "plugins": [
+        'PING',
+        'help',
+        'uptime',
+        'up',
+        'slap',
+        'insult',
+        'oneliner',
+        'quit',
+        'saychat',
+        'join',
+        'leave',
+        'asl',
+        'told',
+        'youtube'
+    ]
 }
 
 class Locker(object):
