@@ -112,7 +112,7 @@ class GreeterBot(IRCBot):
     def command_patterns(self):
         return (
             self.ping('(?P<_type>[.@!])uptime(?P<query> full|)', self.uptime),
-            self.ping('(?P<_type>[.@!])up(?P<query> .*|)', self.up),
+            self.ping('(?P<_type>[.@!])up (?P<query>.*|)', self.up),
             self.ping('(?P<_type>[.@!])slap(?P<query> .*|)', self.slap),
             self.ping('(?P<_type>[.@!])insult(?P<query> .*|)', self.insult),
             self.ping('(?P<_type>[.@!])oneliner', self.oneliner),
