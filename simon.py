@@ -39,7 +39,7 @@ def Hook(plugin,find=False,help=[],operonly=False):
         help2 = help[1]+' (operator only)' if operonly else help2
         commands[plugin] = [help1,help2]
     if find and plugin in GS['plugins']:
-        print(plugin + ': ' + str(find) + '('+nick+', '+ex[2]+')')
+        print(plugin + ': ' + str(find))
         if operonly and nick not in GS['owners']:
             sendm(irc,nick + ": you're not on the operator list.", ex[2])
         else:
@@ -66,18 +66,10 @@ while 1:
     print(p.findall(ex[0]))
     if p.findall(ex[0]):
         nick = p.findall(ex[0])[0]
-
-    if p.findall(ex[0]):
         if ex[2] == GS['connect']['nick']:
             ex[2] = nick
 
-    # if text.find(" JOIN :#") != -1 or text.find(" JOIN #") != -1 and text.find( GS['connect']['nick'] ) == -1 and ex[4].strip() != 'JOIN':
-    #     if text.find(" JOIN #") != -1:
-    #         sendm(irc, 'Hello ' + nick + ' :-) Welcome to ' + ex[2].strip() + '.', ex[2].strip())
-    #     else:
-    #         sendm(irc, 'Hello ' + nick + ' :-) Welcome to ' + ex[2].split(':')[1] + '.', ex[2].split(':')[1])
-
-    Hook('PING', text.find('PING') != -1)
+    Hook('PING', text.find('PING ') != -1)
     Hook('help', text.find(":!help\r\n") != -1, ['', 'show this help message'])
     Hook('uptime', text.find(":!uptime\r\n") != -1 or text.find(":!uptime full\r\n") != -1, ['[full]', 'uptime for the server which leSimon is running on'])
     Hook('up', text.find(":!up ") != -1, ['<site>', 'checks if <site> is up'])

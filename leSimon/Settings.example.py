@@ -1,7 +1,3 @@
-import json
-from threading import Timer
-from time import strftime
-
 GS = { #Settings array
     "connect": {
         "host": "irc.rizon.net", #irc server hostname
@@ -19,7 +15,7 @@ GS = { #Settings array
         'user1',
         'user2'
     ],
-    # enabled plugins go below
+    # enabled plugins go below (only for normal simon, not blacksimon.)
     "plugins": [
         'PING',
         'help',
@@ -37,25 +33,3 @@ GS = { #Settings array
         'youtube'
     ]
 }
-
-class Locker(object):
-    def __init__(self, Time=None):
-        self.Time = Time if Time or Time == 0 and type(Time) == int else 10
-        # banhammer would be proud ;-;
-        self.Locked = False
-
-    def Lock(self):
-        if not self.Locked:
-            if self.Time > 0:
-                self.Locked = True
-                t = Timer(self.Time, self.Unlock, ())
-                t.daemon = True
-                t.start()
-        return self.Locked
-
-    def IsLocked(self):
-        return self.Locked
-
-    def Unlock(self):
-        self.Locked = False
-        return self.Locked

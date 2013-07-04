@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 Told = [
     "TOLDASAURUS REX",
     "Cash4told.com",
