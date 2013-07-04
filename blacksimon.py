@@ -1,20 +1,17 @@
 # -*- coding: UTF-8 -*-
 from irccrap import IRCBot, run_bot
-import leSimon.Settings
 import sys
-import httplib2
 import json
-import urllib
 import re
 import requests
 import sys
 from random import choice
 from subprocess import check_output
+import leSimon.Settings
 from leSimon.Asl import Asl
 from leSimon.YT import Stats
 from leSimon import Uptime
 from leSimon.Told import Told
-from leSimon import Modules
 from leSimon.Slap import Slap
 
 class GreeterBot(IRCBot):
