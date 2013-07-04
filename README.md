@@ -8,7 +8,7 @@ To run:
 1. Clone this repo
 2. ```pip install httplib2 requests```
 3. Edit ```leSimon/Settings.example.py``` and rename to ```leSimon/Settings.py```
-4. Run ```python simon.py``` for non-irckit version, else run ```python blacksimon.py```
+4. Run ```python blacksimon.py```
 
 
 LICENSE
