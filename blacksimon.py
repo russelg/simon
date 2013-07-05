@@ -15,6 +15,10 @@ from leSimon.Told import Told
 from leSimon.Slap import Slap
 
 class GreeterBot(IRCBot):
+    _commands = {}
+    _admin_commands = {}
+
+    _commands['uptime'] = ['[full]', 'uptime for the server which leSimon is running on']
     def uptime(self, nick, message, channel, _type='.', query=''):
         query = query.strip()
         if query == 'full':
@@ -22,6 +26,7 @@ class GreeterBot(IRCBot):
         else:
             self.respond('%s' % (Uptime.uptime()), channel, nick, _type)
 
+    _commands['up'] = ['<site>', 'checks if <site> is up']
     def up(self, nick, message, channel, _type='.', query=''):
         query = query.strip()
         if query == '':
@@ -38,10 +43,12 @@ class GreeterBot(IRCBot):
             else:
                 self.respond("I couldn't connect to isup.me :((", channel, nick, _type)
 
+    _commands['slap'] = ['[user]', 'slaps [user] if given, else will slap the caller']
     def slap(self, nick, message, channel, _type='.', query=''):
         query = query.strip() or 'themself'
         self.respond('%s slaps %s around a bit with %s' % (nick, query, choice(Slap)), channel, nick, _type)
 
+    _commands['insult'] = ['[user]', 'displays an insult, hilights [user] if given']
     def insult(self, nick, message, channel, _type='.', query=''):
         c = query.strip()
         html = requests.get("http://www.insultgenerator.org")
@@ -53,6 +60,7 @@ class GreeterBot(IRCBot):
         else:
             self.respond("I couldn't insult you.", channel, nick, _type)
 
+    _commands['oneliner'] = ['', 'random edgy comment']
     def oneliner(self, nick, message, channel, _type='.', query=''):
         html = requests.get("http://www.onelinerz.net/random-one-liners/1/")
         if html.status_code == 200:
@@ -78,6 +86,7 @@ class GreeterBot(IRCBot):
     def told(self, nick, message, channel, _type='.'):
         self.respond("%s" % choice(Told), channel, nick, _type)
 
+    _admin_commands['join'] = ['<#channel>','makes bot join <#channel>']
     def join_channel(self, nick, message, channel, _type='.', query=''):
         if nick not in GS['owners']:
             self.respond("You aren't in the bot operator list.", channel, nick, _type)
@@ -86,6 +95,7 @@ class GreeterBot(IRCBot):
             if query:
                 self.join(query)
 
+    _admin_commands['leave'] = ['<#channel>','makes bot leave <#channel>']
     def leave_channel(self, nick, message, channel, _type='.', query=''):
         if nick not in GS['owners']:
             self.respond("You aren't in the bot operator list.", channel, nick, _type)
@@ -94,6 +104,7 @@ class GreeterBot(IRCBot):
             if query:
                 self.part(query)
 
+    _admin_commands['say'] = ['<#channel> <message>','say <message> to <#channel>']
     def say_channel(self, nick, message, channel, _type='.', chan='', text=''):
         if nick not in GS['owners']:
             self.respond("You aren't in the bot operator list.", channel, nick, _type)
@@ -106,6 +117,29 @@ class GreeterBot(IRCBot):
                 else:
                     self.respond(text, nick=chan)
 
+    def helps(self, nick, message, channel, _type='@'):
+        _type = '@'
+        def formathelp(msg):
+            return msg.replace('<','\x02<').replace('>','>\x02').replace('[','\x02[').replace(']',']\x02')
+        self.respond('leSimon help docs or something, who cares' , channel, nick, _type)
+        self.respond(formathelp('<param> = necessary, [param] = optional') , channel, nick, _type)
+        self.respond('\x02COMMANDS\x02', channel, nick, _type)
+        for key, value in list(self._commands.items()):
+            if value[0] != '':
+                args = ' ' + formathelp(value[0])
+            else:
+                args = ''
+            msgs = formathelp(value[1])
+            self.respond('     !' + key + args + ' - ' + msgs, channel, nick, _type)
+        self.respond('\x02ADMIN COMMANDS\x02', channel, nick, _type)
+        for key, value in list(self._admin_commands.items()):
+            if value[0] != '':
+                args = ' ' + formathelp(value[0])
+            else:
+                args = ''
+            msgs = formathelp(value[1])
+            self.respond('     !' + key + args + ' - ' + msgs, channel, nick, _type)
+
     def command_patterns(self):
         return (
             self.ping('(?P<_type>[.@!])uptime(?P<query> full|)', self.uptime),
@@ -113,6 +147,7 @@ class GreeterBot(IRCBot):
             self.ping('(?P<_type>[.@!])slap(?P<query> .*|)', self.slap),
             self.ping('(?P<_type>[.@!])insult(?P<query> .*|)', self.insult),
             self.ping('(?P<_type>[.@!])oneliner', self.oneliner),
+            self.ping('(?P<_type>[.@!])help', self.helps),
             self.ping('.*v=(?P<vidid>[a-zA-Z0-9_\-]{11}).*', self.youtube),
             self.ping('(?:\s+?|^)asl(?:\s+?|$)', self.asl),
             self.ping('(?:\s+?|^)[tT][oO][lL][dD](?:\s+?|$)', self.told),
